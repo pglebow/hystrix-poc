@@ -26,8 +26,8 @@ public class DataDaoImpl implements DataDao {
 	public Set<DataItem> getData() {
 		Set<DataItem> retVal = new HashSet<>();
 		
-		DataItem i0 = DataItem.builder().key("t0").now(LocalDateTime.now()).build();
-		DataItem i1 = DataItem.builder().key("t1").now(LocalDateTime.now()).build();
+		DataItem i0 = DataItem.builder().key("t0").now(LocalDateTime.now().toString()).build();
+		DataItem i1 = DataItem.builder().key("t1").now(LocalDateTime.now().toString()).build();
 		
 		retVal.add(i0);
 		retVal.add(i1);

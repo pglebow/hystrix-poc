@@ -4,17 +4,20 @@
 package com.gap.plan.hystrix.poc.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author pglebow
  *
  */
 @Data
-@Builder
+@Builder()
+@NoArgsConstructor
+@AllArgsConstructor
 public class DataItem implements Serializable {
 
 	/**
@@ -24,5 +27,5 @@ public class DataItem implements Serializable {
 
 	private String key;
 	
-	private LocalDateTime now;
+	private String now;
 }

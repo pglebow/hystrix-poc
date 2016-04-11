@@ -4,52 +4,48 @@
 package com.gap.plan.hystrix.poc.controller;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gap.plan.hystrix.poc.feign.HystrixPocDataController;
 import com.gap.plan.hystrix.poc.model.DataItem;
 import com.gap.plan.hystrix.poc.service.DataService;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 /**
  * @author pglebow
  *
  */
 @Controller
-@RequestMapping("/api")
-public class DataController {
+public class DataController implements HystrixPocDataController {
 
 	@Autowired
 	private DataService dataService;
+		
+	@Override
+	public Set<DataItem> getData() {
+		Set<DataItem> retVal = null;
 
-	@RequestMapping(value = "data", method = RequestMethod.GET)
-	@ResponseBody
-	@HystrixCommand(fallbackMethod = "getDefaultData")
-	public ResponseEntity<?> getData() {
-		ResponseEntity<?> retVal = ResponseEntity.notFound().build();
-
-		retVal = ResponseEntity.ok().body(dataService.getData());
-
-		return retVal;
+		retVal = dataService.getData();
+		
+		return Optional.ofNullable(retVal).orElse(Collections.emptySet());
 	}
-	
+
 	public ResponseEntity<?> getDefaultData() {
 		ResponseEntity<?> retVal = ResponseEntity.notFound().build();
-		
+
 		Set<DataItem> s = new HashSet<>();
-		DataItem item = DataItem.builder().key("default-data").now(LocalDateTime.now()).build();
-		
+		DataItem item = DataItem.builder().key("default-data").now(LocalDateTime.now().toString()).build();
+
 		s.add(item);
-		
+
 		retVal = ResponseEntity.ok().body(s);
-		
+
 		return retVal;
 	}
 }
