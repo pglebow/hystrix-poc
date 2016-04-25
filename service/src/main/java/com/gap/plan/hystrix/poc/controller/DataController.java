@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import com.gap.plan.hystrix.poc.feign.HystrixPocDataController;
 import com.gap.plan.hystrix.poc.model.DataItem;
 import com.gap.plan.hystrix.poc.service.DataService;
 
@@ -22,12 +21,11 @@ import com.gap.plan.hystrix.poc.service.DataService;
  *
  */
 @Controller
-public class DataController implements HystrixPocDataController {
+public class DataController {
 
 	@Autowired
 	private DataService dataService;
 		
-	@Override
 	public Set<DataItem> getData() {
 		Set<DataItem> retVal = null;
 
