@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-@Builder()
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataItem implements Serializable {
